@@ -47,7 +47,7 @@ require_once 'HTML/QuickForm/select.php';
 require_once 'HTML/QuickForm/Renderer/ArraySmarty.php';
 $form = new HTML_QuickForm('form_import','post','main.php?p=61202');
 
-/* Variable indiquant la position de l'agent Python, elle est modifiée par le fichier install.sh lors de l'installation du module. */
+/* Variable indiquant la position de l'agent Python, elle est modifiÃ©e par le fichier install.sh lors de l'installation du module. */
 $agentDir = "@AGENT_DIR@/DiscoveryAgent_central.py";
 //$agentDir = "/usr/share/centreon-discovery/DiscoveryAgent_central.py";
 
@@ -58,7 +58,7 @@ if (!empty($_POST)){
 }
 
 		/*
-			Fonction permettant de tronquer une chaine de caractère et de remplacer la fin par des points de suspentions.
+			Fonction permettant de tronquer une chaine de caractÃ¨re et de remplacer la fin par des points de suspentions.
 		*/
 		function strCut($string, $max = 36, $end = '...') 
 		{
@@ -69,7 +69,7 @@ if (!empty($_POST)){
 		}
 		
 		/*
-			Fonction qui récupère et classe les Hôtes et les Templates d'hôtes
+			Fonction qui rÃ©cupÃ¨re et classe les HÃ´tes et les Templates d'hÃ´tes
 		*/
 
 ?>
@@ -103,7 +103,7 @@ if (!empty($_POST)){
 	}
 	//if (!empty($_POST) && isset($_POST['cb1'])){
 	if (!empty($_POST)){
-		//Création des hosts 
+		//CrÃ©ation des hosts 
 		function getListHost() {
 			$listhost=Array();
 			$req=mysql_query("SELECT count(*) FROM mod_discovery_rangeip WHERE id!=0 AND done!=1;");
@@ -126,15 +126,15 @@ if (!empty($_POST)){
 		if ($hostList != null){
 			foreach ($hostList as $host)
 			{
-				//On récupere les infos sur l'hote à créer (hostname, ip, template, group)
+				//On rÃ©cupere les infos sur l'hote Ã  crÃ©er (hostname, ip, template, group)
 				$reqHostToCreate = mysql_query("SELECT * FROM mod_discovery_results WHERE id=".$host.";");
 				$hostToCreate = mysql_fetch_array($reqHostToCreate,MYSQL_ASSOC);
 				
-				//On récupere des infos sur l'hotes à créer
+				//On rÃ©cupere des infos sur l'hotes Ã  crÃ©er
 				$reqHostInfos = mysql_query("SELECT snmp_community,snmp_version,snmp_v3login, snmp_v3level, snmp_v3authtype, snmp_v3authpass, snmp_v3privtype, snmp_v3privpass, nagios_server_id FROM mod_discovery_rangeip WHERE id=".$hostToCreate["plage_id"].";");
 				$hostInfos = mysql_fetch_array($reqHostInfos,MYSQL_ASSOC);
 				
-				//On rempli la variable tmpConf qui sera envoyée à la fonction callInsertHostInDb()
+				//On rempli la variable tmpConf qui sera envoyÃ©e Ã  la fonction callInsertHostInDb()
 				$tmpConf = array();
 				$id=$hostToCreate["id"];
 				$tmpConf["host"]["host_name"] = $_POST["hostname"][$id];
@@ -148,8 +148,8 @@ if (!empty($_POST)){
 					// Ajout macros
 				}
 				$tmpConf["host"]["host_snmp_version"] =  $hostInfos["snmp_version"];
-				$tmpConf["host"]["host_register"]["host_register"] = "1";
-				$tmpConf["host"]["host_activate"]["host_activate"] = "1";
+				$tmpConf["host"]["host_register"] = "1";
+				$tmpConf["host"]["host_activate"] = "1";
 				$tmpConf["host"]["host_template_model_htm_id"] = $_POST["select_template".$host];
 				if ($_POST["select_group".$host]!= -1)
 				{
@@ -270,7 +270,7 @@ if (!empty($_POST)){
 	else {
 		$subnetHostsList = mysql_query("SELECT * FROM mod_discovery_results WHERE SUBSTRING_INDEX(`ip`, '.', 1)&".$maskoctets[0]." = ".$netoctets[0]." AND SUBSTRING_INDEX(SUBSTRING_INDEX(`ip`, '.',-3),'.',1)&".$maskoctets[1]." = ".$netoctets[1]." AND SUBSTRING_INDEX(SUBSTRING_INDEX(`ip`, '.',-2),'.',1)&".$maskoctets[2]." = ".$netoctets[2]." AND SUBSTRING_INDEX(`ip`,'.',-1)&".$maskoctets[3]." = ".$netoctets[3]." ORDER BY INET_ATON(ip) ASC ;");
 	}
-	if($subnetDoneData["done"]==2){ // Recherche terminée
+	if($subnetDoneData["done"]==2){ // Recherche terminÃ©e
 			$cbgroup++;
 	?>
 	<font size="3px" style="font-weight:bold;"><?php echo $subnetDoneData["plage"].' / '.$subnetDoneData["cidr"].' polled by '.$poller["name"].' ('.$poller["ns_ip_address"].') | <a href="#" title="View addresses" onClick="$j(\'#scan'.$subnetDoneData["id"].'\').slideToggle(\'fast\');"><font color="green" size="2px"> '.$subnetDoneData["cnt"].' address(es) discovered</font></a><br>'; ?>
@@ -361,7 +361,7 @@ if (!empty($_POST)){
 			echo '          </table>';
 			echo '          <br>';
 		}
-		elseif ($subnetDoneData["done"]==3) { // Recherche terminée -> No result
+		elseif ($subnetDoneData["done"]==3) { // Recherche terminÃ©e -> No result
 			echo '          <br><font size="3px" style="font-weight:bold;">'.$subnetDoneData["plage"].' /'.$subnetDoneData["cidr"].' polled by '.$poller["name"].' ('.$poller["ns_ip_address"].') | <a href="#" title="View addresses" onClick="$j(\'#scan'.$subnetDoneData["id"].'\').slideToggle(\'fast\');"><font color="red" size="2px"> ERROR : Connection lost with the poller agent</font></a><br>';
 			echo '			<div id="scan'.$subnetDoneData["id"].'">';
 			echo '          <br><br><table class="ListTable">';
@@ -425,7 +425,7 @@ if (!empty($_POST)){
 								}							
 							}
 						}
-						// Si on a qu'un seul mot clé
+						// Si on a qu'un seul mot clÃ©
 						else
 						{
 							if (substr_count($sysDescr,$values['os']) != 0)
@@ -457,7 +457,7 @@ if (!empty($_POST)){
 							if (isset($_POST["oid_os".$i]) && !empty($_POST["oid_os".$i]) && ereg("^(\.([1-9][0-9]+|[0-9]))+$", $_POST["oid_os".$i]) && isset($_POST["oid_hostname".$i]) && !empty($_POST["oid_hostname".$i]) && ereg("^(\.([1-9][0-9]+|[0-9]))+$", $_POST["oid_hostname".$i])){
 								$upd_SQL.="oid_os='".$_POST["oid_os".$i]."', oid_hostname='".$_POST["oid_hostname".$i]."', ";
 							}
-							//Mise à jour du champs done à 1 pour dire qu'il faut le scanner
+							//Mise Ã  jour du champs done Ã  1 pour dire qu'il faut le scanner
 							$upd_SQL.="done=1 ";
 							$upd_SQL.="WHERE id='".$_POST["id".$i]."';";
 							mysql_query($upd_SQL)or die(mysql_error());
